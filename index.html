@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hornit - Weekly Report - 2026-03-14</title>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --obsidian-black:   #131316;
+    --royal-blue:       #4A6CF7;
+    --vivid-violet:     #8B5CF6;
+    --neon-lime:        #34D399;
+    --card-bg:          #1A1A1F;
+    --card-border:      #262630;
+    --text-primary:     #EAEAEA;
+    --text-secondary:   #888888;
+    --text-muted:       #555555;
+    --divider:          #2A2A30;
+    --positive-glow:    rgba(52,211,153,0.15);
+    --blue-glow:        rgba(74,108,247,0.25);
+    --violet-glow:      rgba(139,92,246,0.20);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    background: var(--obsidian-black);
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding: 40px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER BAR ── */
+  .report-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 32px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--divider);
+  }
+  .report-header .brand-name {
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+  }
+  .report-header .brand-sub {
+    font-weight: 500;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+  .report-header .report-meta {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  /* ── SECTION TITLES ── */
+  h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-primary);
+  }
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    line-height: 1.15;
+  }
+  h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--royal-blue);
+    display: inline-block;
+  }
+  h3 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 0.18em;
+  }
+
+  /* ── HEADLINE + DESCRIPTION PAIRING ── */
+  .section-desc {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    text-transform: none;
+    letter-spacing: normal;
+    max-width: 640px;
+  }
+  h1 + .section-desc { margin-top: 4px; }
+  h2 + .section-desc { margin-top: -8px; }
+
+  /* ── SECTION LABELS (small category markers) ── */
+  .section-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--vivid-violet);
+    margin-bottom: 12px;
+    margin-top: 40px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+
+  /* ── KPI ROW ── */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .kpi-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .kpi-box .kpi-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+  .kpi-box .kpi-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--royal-blue);
+  }
+  .kpi-box .kpi-delta {
+    font-size: 0.75rem;
+    margin-top: 4px;
+  }
+  .kpi-delta.positive { color: var(--neon-lime); }
+  .kpi-delta.negative { color: var(--text-secondary); }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  thead th {
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--divider);
+  }
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--card-border);
+    color: var(--text-primary);
+  }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+  /* Accent values in tables */
+  .val-blue   { color: var(--royal-blue); font-weight: 600; }
+  .val-violet { color: var(--vivid-violet); font-weight: 600; }
+  .val-green  { color: var(--neon-lime); font-weight: 600; }
+  .val-muted  { color: var(--text-secondary); font-weight: 600; }
+
+  /* ── BADGES / TAGS ── */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .badge-blue   { background: var(--blue-glow); color: var(--royal-blue); }
+  .badge-violet { background: var(--violet-glow); color: var(--vivid-violet); }
+  .badge-green  { background: var(--positive-glow); color: var(--neon-lime); }
+  .badge-muted  { background: rgba(255,255,255,0.05); color: var(--text-secondary); }
+
+  /* ── UTILITY ── */
+  .text-blue    { color: var(--royal-blue); }
+  .text-violet  { color: var(--vivid-violet); }
+  .text-green   { color: var(--neon-lime); }
+  .text-muted   { color: var(--text-muted); }
+  .text-right   { text-align: right; }
+  .mt-1 { margin-top: 8px; }
+  .mt-2 { margin-top: 16px; }
+  .mt-3 { margin-top: 24px; }
+  .mb-1 { margin-bottom: 8px; }
+  .mb-2 { margin-bottom: 16px; }
+  .mb-3 { margin-bottom: 24px; }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--divider);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── NEON GLOW EFFECTS ── */
+  .glow-blue   { text-shadow: 0 0 10px rgba(74,108,247,0.6); }
+  .glow-violet { text-shadow: 0 0 8px rgba(139,92,246,0.6); }
+
+  /* ── PRINT / PDF ── */
+  @media print {
+    body { background: #131316; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="report-header">
+  <div>
+    <div class="brand-name">Nova</div>
+    <div class="brand-sub">Commerce Collective</div>
+  </div>
+  <div class="report-meta">
+    <div style="font-weight:600; color:var(--text-primary);">Weekly Performance Report</div>
+    <div>Hornit</div>
+    <div>8 Mar 2026 - 14 Mar 2026</div>
+  </div>
+</div>
+
+<p class="section-desc" style="margin-bottom:8px;">8 Mar 2026 - 14 Mar 2026 vs 1 Mar 2026 - 7 Mar 2026</p>
+
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- HORNIT UK                                       -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="section-label">Primary Store</div>
+<h1>Hornit UK</h1>
+<p class="section-desc">Store performance overview with spend vs forecast tracking.</p>
+
+<!-- ── HEADLINE KPIs ── -->
+<div class="kpi-row">
+  <div class="kpi-box">
+    <div class="kpi-label">Total Spend</div>
+    <div class="kpi-value">£1,141</div>
+    <div class="kpi-delta negative">-15.7% vs forecast</div>
+    <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">Target: £1,354</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Store Revenue</div>
+    <div class="kpi-value">£12,988</div>
+    <div class="kpi-delta positive">+5.5% vs forecast</div>
+    <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">Target: £12,313</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Store Orders</div>
+    <div class="kpi-value">119</div>
+    <div class="kpi-delta negative">-33.5% vs prev</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Store AOV</div>
+    <div class="kpi-value">£93.11</div>
+    <div class="kpi-delta negative">-0.8% vs prev</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Blended ROAS</div>
+    <div class="kpi-value">11.38x</div>
+    <div class="kpi-delta negative">-29.8% vs prev</div>
+    <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">Target: 9.09x</div>
+  </div>
+</div>
+
+
+<!-- ── NEW vs RETURNING ── -->
+<div class="section-label">Customers</div>
+<h2>New vs Returning</h2>
+<p class="section-desc">Revenue split estimated using daily returning customer rate from Shopify.</p>
+<div class="card">
+  <div style="display:flex; gap:4px; height:28px; border-radius:6px; overflow:hidden; margin-bottom:16px;">
+    <div style="width:89.74053581508504%; background:var(--royal-blue); display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:600;">New 90%</div>
+    <div style="width:10.259464184914954%; background:var(--vivid-violet); display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:600;">Returning 10%</div>
+  </div>
+  <table>
+    <thead><tr><th>Segment</th><th class="text-right">Revenue</th><th class="text-right">Customers</th><th class="text-right">Rev &Delta;</th><th class="text-right">Cust &Delta;</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-blue">New</span></td>
+        <td class="text-right val-blue">£11,655.29</td>
+        <td class="text-right">106</td>
+        <td class="text-right"><span class="negative">-26.0%</span></td>
+        <td class="text-right"><span class="negative">-29.3%</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-violet">Returning</span></td>
+        <td class="text-right val-violet">£1,332.47</td>
+        <td class="text-right">13</td>
+        <td class="text-right"><span class="negative">-57.9%</span></td>
+        <td class="text-right"><span class="negative">-55.2%</span></td>
+      </tr>
+      <tr style="font-weight:700; border-top:2px solid var(--divider);">
+        <td>Total</td>
+        <td class="text-right">£12,987.76</td>
+        <td class="text-right">119</td>
+        <td class="text-right"><span class="negative">-31.3%</span></td>
+        <td class="text-right"><span class="negative">-33.5%</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ── PLATFORM DATA ── -->
+<div class="section-label">Platform Data</div>
+<h2>Channel Performance</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>Channel</th><th class="text-right">Spend</th><th class="text-right">Revenue</th><th class="text-right">ROAS</th><th class="text-right">Clicks</th><th class="text-right">CPC</th><th class="text-right">Spend &Delta;</th><th class="text-right">ROAS &Delta;</th></tr></thead>
+    <tbody>
+      <tr>
+    <td><span class="badge badge-blue">Meta</span></td>
+    <td class="text-right">£174</td>
+    <td class="text-right">£3,612</td>
+    <td class="text-right val-blue">20.75x</td>
+    <td class="text-right">832</td>
+    <td class="text-right">£0.21</td>
+    <td class="text-right"><span class="negative">-13.9%</span></td>
+    <td class="text-right"><span class="positive">+20.8%</span></td>
+  </tr>
+      <tr>
+    <td><span class="badge badge-violet">Google</span></td>
+    <td class="text-right">£967</td>
+    <td class="text-right">£4,958</td>
+    <td class="text-right val-blue">5.13x</td>
+    <td class="text-right">1,647</td>
+    <td class="text-right">£0.59</td>
+    <td class="text-right"><span class="positive">+0.4%</span></td>
+    <td class="text-right"><span class="negative">-49.0%</span></td>
+  </tr>
+      <tr style="font-weight:700; border-top:2px solid var(--divider);">
+        <td>Total</td>
+        <td class="text-right">£1,141</td>
+        <td class="text-right">£8,570</td>
+        <td class="text-right val-blue">7.51x</td>
+        <td class="text-right">2,479</td>
+        <td class="text-right">£0.46</td>
+        <td class="text-right"><span class="negative">-2.1%</span></td>
+        <td class="text-right"><span class="negative">-33.5%</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Meta Campaigns -->
+<div class="section-label">Campaigns</div>
+<h2>Meta Campaigns</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>Campaign</th><th class="text-right">Spend</th><th class="text-right">Revenue</th><th class="text-right">ROAS</th><th class="text-right">Conv</th><th class="text-right">CPC</th><th class="text-right">CTR</th><th class="text-right">Spend &Delta;</th></tr></thead>
+    <tbody><tr>
+      <td>CS | Sales | Cold & Warm | Evergreen | All Products v2</td>
+      <td class="text-right">£174</td>
+      <td class="text-right">£3,612</td>
+      <td class="text-right val-blue">20.75x <span class="val-green">(+3.56)</span></td>
+      <td class="text-right">35</td>
+      <td class="text-right">£0.21</td>
+      <td class="text-right">1.90%</td>
+      <td class="text-right"><span class="negative">-0.0%</span></td>
+    </tr><tr style="font-weight:700; border-top:2px solid var(--divider);">
+    <td>Total</td>
+    <td class="text-right">£174</td>
+    <td class="text-right">£3,612</td>
+    <td class="text-right val-blue">20.75x</td>
+    <td class="text-right">35</td>
+    <td class="text-right">£0.21</td>
+    <td class="text-right">1.90%</td>
+    <td class="text-right"><span class="negative">-13.9%</span></td>
+  </tr></tbody>
+  </table>
+</div>
+
+<!-- Google Campaigns -->
+<h2>Google Campaigns</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>Campaign</th><th class="text-right">Spend</th><th class="text-right">Revenue</th><th class="text-right">ROAS</th><th class="text-right">Conv</th><th class="text-right">CPC</th><th class="text-right">CTR</th><th class="text-right">Spend &Delta;</th></tr></thead>
+    <tbody><tr>
+      <td>CS | Shopping | High | All Products</td>
+      <td class="text-right">£396</td>
+      <td class="text-right">£2,096</td>
+      <td class="text-right val-blue">5.29x <span class="val-muted">(-1.25)</span></td>
+      <td class="text-right">27</td>
+      <td class="text-right">£0.63</td>
+      <td class="text-right">0.91%</td>
+      <td class="text-right"><span class="positive">+4.2%</span></td>
+    </tr><tr>
+      <td>CS | Performance Max | AIRO</td>
+      <td class="text-right">£286</td>
+      <td class="text-right">£871</td>
+      <td class="text-right val-blue">3.05x <span class="val-muted">(-8.90)</span></td>
+      <td class="text-right">10</td>
+      <td class="text-right">£0.63</td>
+      <td class="text-right">1.73%</td>
+      <td class="text-right"><span class="positive">+0.5%</span></td>
+    </tr><tr>
+      <td>CS | Search | Brand</td>
+      <td class="text-right">£213</td>
+      <td class="text-right">£1,495</td>
+      <td class="text-right val-blue">7.02x <span class="val-muted">(-5.22)</span></td>
+      <td class="text-right">17</td>
+      <td class="text-right">£0.58</td>
+      <td class="text-right">28.82%</td>
+      <td class="text-right"><span class="negative">-1.2%</span></td>
+    </tr><tr>
+      <td>CS | Shopping | Low | All Products</td>
+      <td class="text-right">£73</td>
+      <td class="text-right">£496</td>
+      <td class="text-right val-blue">6.81x <span class="val-muted">(-7.03)</span></td>
+      <td class="text-right">12</td>
+      <td class="text-right">£0.37</td>
+      <td class="text-right">1.99%</td>
+      <td class="text-right"><span class="negative">-13.5%</span></td>
+    </tr><tr style="font-weight:700; border-top:2px solid var(--divider);">
+    <td>Total</td>
+    <td class="text-right">£967</td>
+    <td class="text-right">£4,958</td>
+    <td class="text-right val-blue">5.13x</td>
+    <td class="text-right">66.14965600000001</td>
+    <td class="text-right">£0.59</td>
+    <td class="text-right">1.54%</td>
+    <td class="text-right"><span class="positive">+0.4%</span></td>
+  </tr></tbody>
+  </table>
+</div>
+
+
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- HORNIT USA                                      -->
+<!-- ════════════════════════════════════════════════ -->
+<div style="margin-top:56px; padding-top:32px; border-top:2px solid var(--divider);"></div>
+<div class="section-label">US Store</div>
+<h1 style="font-size:1.8rem;">Hornit USA</h1>
+<p class="section-desc">Google Ads platform data. Budget: £27/wk target.</p>
+
+<!-- Quick Stats -->
+<div class="kpi-row">
+  <div class="kpi-box">
+    <div class="kpi-label">Spend</div>
+    <div class="kpi-value">$52</div>
+    <div class="kpi-delta positive">+90.1% vs forecast</div>
+    <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">Target: $27</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Revenue</div>
+    <div class="kpi-value">$232</div>
+    <div class="kpi-delta positive">+22.4% vs prev</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">ROAS</div>
+    <div class="kpi-value">4.50x</div>
+    <div class="kpi-delta positive">+11.3% vs prev</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Conversions</div>
+    <div class="kpi-value">4</div>
+    <div class="kpi-delta positive">+100.0% vs prev</div>
+  </div>
+</div>
+
+<!-- Google Campaigns -->
+<h2>Google Campaigns</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>Campaign</th><th class="text-right">Spend</th><th class="text-right">Revenue</th><th class="text-right">ROAS</th><th class="text-right">Conv</th><th class="text-right">CPC</th><th class="text-right">CTR</th><th class="text-right">Spend &Delta;</th></tr></thead>
+    <tbody><tr>
+      <td>CS | Performance Max | CLUG</td>
+      <td class="text-right">$52</td>
+      <td class="text-right">$232</td>
+      <td class="text-right val-blue">4.50x <span class="val-green">(+0.46)</span></td>
+      <td class="text-right">4</td>
+      <td class="text-right">$0.36</td>
+      <td class="text-right">1.06%</td>
+      <td class="text-right"><span class="positive">+10.0%</span></td>
+    </tr><tr style="font-weight:700; border-top:2px solid var(--divider);">
+    <td>Total</td>
+    <td class="text-right">$52</td>
+    <td class="text-right">$232</td>
+    <td class="text-right val-blue">4.50x</td>
+    <td class="text-right">4</td>
+    <td class="text-right">$0.36</td>
+    <td class="text-right">1.06%</td>
+    <td class="text-right"><span class="positive">+10.0%</span></td>
+  </tr></tbody>
+  </table>
+</div>
+
+
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- RASCAL BIKES                                    -->
+<!-- ════════════════════════════════════════════════ -->
+<div style="margin-top:56px; padding-top:32px; border-top:2px solid var(--divider);"></div>
+<div class="section-label">Rascal Bikes</div>
+<h1 style="font-size:1.8rem;">Rascal Bikes</h1>
+<p class="section-desc">Platform data across Meta and Google. Budget: £91/wk target.</p>
+
+<!-- Quick Stats -->
+<div class="kpi-row">
+  <div class="kpi-box">
+    <div class="kpi-label">Spend</div>
+    <div class="kpi-value">£24</div>
+    <div class="kpi-delta negative">-74.2% vs forecast</div>
+    <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">Target: £91</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Revenue</div>
+    <div class="kpi-value">£0</div>
+    <div class="kpi-delta positive">+0.0% vs prev</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">ROAS</div>
+    <div class="kpi-value">0.00x</div>
+    <div class="kpi-delta positive">+0.0% vs prev</div>
+  </div>
+</div>
+
+<!-- Google Campaigns -->
+<h2>Google Campaigns</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>Campaign</th><th class="text-right">Spend</th><th class="text-right">Revenue</th><th class="text-right">ROAS</th><th class="text-right">Conv</th><th class="text-right">CPC</th><th class="text-right">CTR</th><th class="text-right">Spend &Delta;</th></tr></thead>
+    <tbody><tr>
+      <td>CS | Shopping | Pedal Bikes</td>
+      <td class="text-right">£24</td>
+      <td class="text-right">£0</td>
+      <td class="text-right val-blue">0.00x <span class="val-green">(+0.00)</span></td>
+      <td class="text-right">0</td>
+      <td class="text-right">£0.87</td>
+      <td class="text-right">0.62%</td>
+      <td class="text-right"><span class="negative">-79.3%</span></td>
+    </tr><tr style="font-weight:700; border-top:2px solid var(--divider);">
+    <td>Total</td>
+    <td class="text-right">£24</td>
+    <td class="text-right">£0</td>
+    <td class="text-right val-blue">0.00x</td>
+    <td class="text-right">0</td>
+    <td class="text-right">£0.87</td>
+    <td class="text-right">0.62%</td>
+    <td class="text-right"><span class="negative">-79.3%</span></td>
+  </tr></tbody>
+  </table>
+</div>
+
+<!-- Meta Campaigns -->
+<h2>Meta Campaigns</h2>
+<div class="card">
+  <p style="color:var(--text-secondary);font-size:0.85rem;">No active Meta campaigns this period. Meta ad account not yet connected.</p>
+</div>
+
+
+
+<div class="report-footer">
+  <span>Nova Commerce Collective</span>
+  <span>Confidential</span>
+</div>
+
+</body>
+</html>
